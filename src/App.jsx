@@ -1,13 +1,21 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "./assets/vite.svg";
-import heroImg from "./assets/hero.png";
 import "./App.css";
+import { SupabaseClient } from "@supabase/supabase-js";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState([]);
+  return (
+    <div className="App">
+      <h1>Todo List</h1>
 
-  return <></>;
+      <div>
+        <input type="text" placeholder="New Todo..." />
+        <button>Add Todo</button>
+      </div>
+
+      <ul></ul>
+    </div>
+  );
 }
 
 export default App;
