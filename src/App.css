@@ -182,3 +182,117 @@
     border-right-color: var(--border);
   }
 }
+
+/* App.jsx start here */
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f0f0f0;
+  border-radius: 10px;
+  font-family: Arial;
+}
+
+/* Title */
+.title {
+  text-align: center;
+  color: #333;
+}
+
+/* Input section */
+.inputBox {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* Input */
+.input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Add button */
+.addBtn {
+  padding: 10px 15px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* List */
+.list {
+  margin-top: 30px;
+  list-style: none;
+  padding: 0;
+}
+
+/* Card */
+.card {
+  background: white;
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Done text */
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+
+/* Buttons */
+.btnGroup {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.complete {
+  background: #28a745;
+  color: white;
+}
+
+.delete {
+  background: #dc3545;
+  color: white;
+}
+
+/* 📱 Mobile Responsive */
+@media (max-width: 600px) {
+  .inputBox {
+    flex-direction: column;
+  }
+
+  .addBtn {
+    width: 100%;
+  }
+
+  .card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .btnGroup {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
