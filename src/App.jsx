@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { supabase } from "./supabaseClient";
 
@@ -6,6 +6,20 @@ function App() {
   const [todoList, setTodoList] = useState([]); //It means: “I will store a LIST of todos” thats why here [] (empty array)
 
   const [newTodo, setNewTodo] = useState(""); //It means: “I will store a SINGLE todo” thats why here "" (empty string)
+
+  useEffect(() => {
+    fetchTodos();
+  }, []);
+
+  const fetchTodos = async () => {
+    const { data, error } = await supabase.from(todoList).select("*"); //.select("*") → get all rows
+
+    if (error) {
+      console.error("Erroe fetching todos:", error);
+    } else {
+      setTodoList(data); //if success save data in todo list 
+    }
+  };
 
   const addTodo = async () => {
     const newTodoData = {
@@ -19,12 +33,40 @@ function App() {
       .single(); // TodoList from supabase table name and it return a single peace of data because we are inserting only one todo at a time
 
     if (error) {
-      console.error("Error addind todo:", error);
+      console.error("Error adding todo:", error);
     } else {
       setTodoList((prev) => [...prev, data]); // Update the local state with the new todo
       setNewTodo(""); // Clear the input field after adding the todo
     }
   };
+
+
+  // Complete Task (UPDATE)
+  const completedTask = async (id, isCompleted) => {
+    const { data, error } = await supabase
+      .from("TodoList")
+      .update({ isCompleted: !isCompleted })
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error updating task:", error);
+    } else {
+      const updatedTodoList = todoList.map((todo) =>
+        todo.id === id ? { ...todo, isCompleted: !isCompleted } : todo,
+      );
+      setTodoList(updatedTodoList);
+    }
+  };
+
+  const deleteTask = async(id) => {
+    const {} = await supabase.from("TodoList").delete(.eq("id", id))
+
+    if(error) {
+      console.error("Error deleting task:", error)
+    }else{
+      setTodoList((prev) => (prev.filter((todo) => todo.id !==id)))
+    }
+  }; 
 
   return (
     <div
@@ -97,7 +139,12 @@ function App() {
               boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
             }}
           >
-            {todo}
+            <p> {todo.name}</p>
+            <button onClick={() => completedTask(todo.id.isCompleted)}>
+              {todo.isCompleted ? "Undo" : "Complete Task"}
+            </button>
+
+            <button onClick={() => deleteTask(todo.id)}>Delete Task</button>
           </li>
         ))}
       </ul>
