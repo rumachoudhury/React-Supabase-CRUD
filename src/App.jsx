@@ -3,7 +3,7 @@ import "./App.css";
 import { supabase } from "./supabaseClient";
 
 function App() {
-  const [todos, setTodos] = useState([]); //It means: “I will store a LIST of todos” thats why here [] (empty array)
+  const [todoList, setTodoList] = useState([]); //It means: “I will store a LIST of todos” thats why here [] (empty array)
 
   const [newTodo, setNewTodo] = useState(""); //It means: “I will store a SINGLE todo” thats why here "" (empty string)
 
@@ -13,7 +13,17 @@ function App() {
       isCompleted: false,
     };
 
-    const {} = await supabase.form("TodoList").insert([newTodoData]).single(); // TodoList from supabase table name and it return a single peace of data because we are inserting only one todo at a time
+    const { data, error } = await supabase
+      .from("TodoList")
+      .insert([newTodoData])
+      .single(); // TodoList from supabase table name and it return a single peace of data because we are inserting only one todo at a time
+
+    if (error) {
+      console.error("Error addind todo:", error);
+    } else {
+      setTodoList((prev) => [...prev, data]); // Update the local state with the new todo
+      setNewTodo(""); // Clear the input field after adding the todo
+    }
   };
 
   return (
@@ -42,7 +52,7 @@ function App() {
         <input
           type="text"
           placeholder="New Todo..."
-          onChange={(e) => setTodos(e.target.value)}
+          onChange={(e) => setNewTodo(e.target.value)}
           style={{
             padding: "10px",
             width: "250px",
@@ -61,6 +71,7 @@ function App() {
             borderRadius: "5px",
             cursor: "pointer",
           }}
+          onClick={addTodo}
         >
           Add Todo
         </button>
@@ -74,7 +85,7 @@ function App() {
           textAlign: "center",
         }}
       >
-        {todos.map((todo, index) => (
+        {todoList.map((todo, index) => (
           <li
             key={index}
             style={{
