@@ -197,11 +197,12 @@ function App() {
     }
   };
 
+  // Complete Task (UPDATE)
   const completedTask = async (id, isCompleted) => {
     await supabase
       .from("TodoList")
       .update({ isCompleted: !isCompleted })
-      .eq("id", id);
+      .eq("id", id); //meaning isCompleted: !isCompleted  is if isCompleted is true then it will be false and if isCompleted is false then it will be true
 
     setTodoList((prev) =>
       prev.map((todo) =>
@@ -213,7 +214,12 @@ function App() {
   const deleteTask = async (id) => {
     await supabase.from("TodoList").delete().eq("id", id);
 
-    setTodoList((prev) => prev.filter((todo) => todo.id !== id));
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    setTodoList((prev) => prev.filter((todo) => todo.id !== id)); //filter is used because filter is used to remove the deleted task from the todo list and it return a new array without the deleted task
   };
 
   return (
@@ -224,7 +230,7 @@ function App() {
         <input
           type="text"
           placeholder="New Todo..."
-          value={newTodo}
+          value={newTodo} //newTodo is value of input and setNewTodo is function to change the value of newTodo
           onChange={(e) => setNewTodo(e.target.value)}
           className="input"
         />
