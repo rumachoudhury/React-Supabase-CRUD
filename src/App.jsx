@@ -54,7 +54,7 @@ function App() {
     const { error } = await supabase.from("TodoList").delete().eq("id", id);
 
     if (error) {
-      console.error(error);
+      console.error("Error deleting task:", error);
       return;
     }
 
