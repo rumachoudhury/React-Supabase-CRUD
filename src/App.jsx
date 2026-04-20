@@ -7,17 +7,30 @@ function App() {
   const [newTodo, setNewTodo] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // const fetchTodos = async () => {
+  //   setLoading(true); // start waiting
+  //   const { data, error } = await supabase.from("TodoList").select("*");
+
+  //   if (!error) setTodoList(data);
+  //   setLoading(false); // done loading
+  // };
+
+  // useEffect(() => {
+  //   fetchTodos();
+  // }, []);
+
   useEffect(() => {
+    const fetchTodos = async () => {
+      const { data, error } = await supabase.from("TodoList").select("*");
+
+      if (!error) {
+        setTodoList(data);
+      }
+      setLoading(false);
+    };
+
     fetchTodos();
   }, []);
-
-  const fetchTodos = async () => {
-    setLoading(true); // start waiting
-    const { data, error } = await supabase.from("TodoList").select("*");
-
-    if (!error) setTodoList(data);
-    setLoading(false); // done loading
-  };
 
   const addTodo = async () => {
     const newTodoData = {
