@@ -76,7 +76,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="title">Todo List</h1>
+      <h1 className="title">My Todo List</h1>
 
       {loading ? (
         <p className="loading">Loading...</p>
@@ -92,7 +92,7 @@ function App() {
             />
 
             <button className="addBtn" onClick={addTodo}>
-              Add Todo
+              Add Your Todo
             </button>
           </div>
 
