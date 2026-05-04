@@ -247,7 +247,7 @@ function App() {
             />
 
             <button className="addBtn" onClick={addTodo}>
-              Add Todo
+              Add Todo here
             </button>
           </div>
 
