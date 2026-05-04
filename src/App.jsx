@@ -206,7 +206,7 @@ function App() {
     );
   };
 
-  // ❌ Delete Todo
+  //Delete Todo
   const deleteTask = async (id) => {
     const { error } = await supabase.from("TodoList").delete().eq("id", id);
 
